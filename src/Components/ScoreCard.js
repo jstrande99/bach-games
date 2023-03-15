@@ -19,8 +19,8 @@ firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 
 export default function ScoreCard(props){
-    const [pubScores, setPubScores] = useState([]);
-    const [penalties, setPenalties] = useState([]);
+    const [pubScores, setPubScores] = useState(Pubs.map(() => ""));
+    const [penalties, setPenalties] = useState(Pubs.map(() => ""));
     // const [leader, setLeader] = useState("");
     const [total, setTotal] = useState(0);
 
@@ -52,29 +52,31 @@ export default function ScoreCard(props){
         return true;
     }
 
-    const handleEnter = (num) => {
+    const handleEnter = (num, index) => {
         let numberCheck = checkNumber(num);
         if(numberCheck){
-            const newPubScores = [...pubScores, num]; 
-            setPubScores(newPubScores); 
-            let sum = 0; 
+            const newPubScores = [...pubScores];
+            newPubScores[index] = num;
+            setPubScores(newPubScores);
+            let sum = 0;
             newPubScores.forEach((score) => { sum += Number(score);});
-            setTotal(sum); 
-            firestore.collection("Players").doc(props.name.toLowerCase()).update({ Scores: newPubScores, Total: sum }); 
+            setTotal(sum);
+            firestore.collection("Players").doc(props.name.toLowerCase()).update({ Scores: newPubScores, Total: sum });
         }else{
             alert("Not valid number");
         }
     }
-    const handleEnterPenalties = (num) => {
+    const handleEnterPenalties = (num, index) => {
         let numberCheck = checkNumber(num);
         if(numberCheck) {
-            const newPenalties = [...penalties, num];
+            const newPenalties = [...penalties];
+            newPenalties[index] = num;
             setPenalties(newPenalties);
-            let sum = total; 
+            let sum = total;
             newPenalties.forEach((score) => { sum += Number(score);});
-            setTotal(sum); 
-            firestore.collection("Players").doc(props.name.toLowerCase()).update({ Penalties: newPenalties, Total: sum}); 
-        } else{ 
+            setTotal(sum);
+            firestore.collection("Players").doc(props.name.toLowerCase()).update({ Penalties: newPenalties, Total: sum});
+        } else{
             alert("Not valid number");
         }
     }
@@ -94,8 +96,12 @@ export default function ScoreCard(props){
                     <div className="cell1 pubs">{pub}</div>
                     <div className="cell pubs">{Drinks[index]}</div>
                     <div className="cell pubScore">{Pars[index]}</div>
-                    {pubScores[index] ? <p className="cell scores">{pubScores[index]}</p> : <input className="cell scores" type="number" pattern="[0-9]* [enter]" value={pubScores[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnter(e.target.value)}}} />}
-                    {penalties[index] ? <p className="cell scores">{penalties[index]}</p> : <input className="cell scores" type="number" value={penalties[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnterPenalties(e.target.value)}}} />}
+                    {pubScores[index] ? 
+                        <p className="cell scores">{pubScores[index]}</p> : 
+                        <input className="cell scores" type="number" pattern="[0-9]* [enter]" value={pubScores[index]} onChange={(e) => handleEnter(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnter(e.target.value, index)}}} />}
+                    {penalties[index] ? 
+                        <p className="cell scores">{penalties[index]}</p> : 
+                        <input className="cell scores" type="number" value={penalties[index]} onChange={(e) => handleEnterPenalties(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnterPenalties(e.target.value, index)}}} />}
                 </div>
             ))}
             <div>Total: {total}</div>
