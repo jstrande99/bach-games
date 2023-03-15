@@ -96,7 +96,14 @@ export default function ScoreCard(props){
                     {penalties[index] ? <p className="cell scores">{penalties[index]}</p> : <input className="cell scores" type="text" value={penalties[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnterPenalties(e.target.value)}}} />}
                 </div>
             ))}
-            <div>Total: {total}</div>
+            <div className="cell1">Total: {total}</div>
+            <h2>Hazards:</h2>
+            <li>(+2) Break the seal before hole 2</li>
+            <li>(+3) Spill a drink; Yours or anyone elses</li>
+            <li>(+5) Miss a hole</li>
+            <li>(+2) Unfinished Drink</li>
+            <li>(+5) Vomit Comet</li>
+            <li>(+6) Refused Service</li>
         </div>
     );
 };
