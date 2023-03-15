@@ -21,6 +21,7 @@ const firestore = firebase.firestore();
 export default function ScoreCard(props){
     const [pubScores, setPubScores] = useState([]);
     const [penalties, setPenalties] = useState([]);
+    // const [leader, setLeader] = useState("");
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
@@ -80,6 +81,7 @@ export default function ScoreCard(props){
 
     return (
         <div className="body">
+            <h2>Leader:</h2>
             <div className="row header">
                 <div className="cell1">Hole</div>
                 <div className="cell">Drinks</div>
@@ -92,11 +94,11 @@ export default function ScoreCard(props){
                     <div className="cell1 pubs">{pub}</div>
                     <div className="cell pubs">{Drinks[index]}</div>
                     <div className="cell pubScore">{Pars[index]}</div>
-                    {pubScores[index] ? <p className="cell scores">{pubScores[index]}</p> : <input className="cell scores" type="text" value={pubScores[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnter(e.target.value)}}} />}
-                    {penalties[index] ? <p className="cell scores">{penalties[index]}</p> : <input className="cell scores" type="text" value={penalties[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnterPenalties(e.target.value)}}} />}
+                    {pubScores[index] ? <p className="cell scores">{pubScores[index]}</p> : <input className="cell scores" type="number" value={pubScores[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnter(e.target.value)}}} />}
+                    {penalties[index] ? <p className="cell scores">{penalties[index]}</p> : <input className="cell scores" type="number" value={penalties[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnterPenalties(e.target.value)}}} />}
                 </div>
             ))}
-            <div className="cell1">Total: {total}</div>
+            <div>Total: {total}</div>
             <h2>Hazards:</h2>
             <li>(+2) Break the seal before hole 2</li>
             <li>(+3) Spill a drink; Yours or anyone elses</li>
