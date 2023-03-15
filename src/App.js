@@ -1,22 +1,18 @@
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Members from './Components/Members';
+import ScoreCard from './Components/ScoreCard';
 
 function App() {
+  const [firstName, setFirstName] = useState(""); 
+  const [name, setName] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={name ? <ScoreCard name={name} /> : < Members firstName={firstName} setFirstName={setFirstName} setName={setName} name={name}/> } />
+      </Routes>
+    </Router>
+
   );
 }
 
