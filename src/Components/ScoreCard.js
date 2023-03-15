@@ -45,7 +45,7 @@ export default function ScoreCard(props){
       }, [props.name]);
 
     const checkNumber = (num) => {
-        if(num < 0 || Number.isInteger(num)){
+        if(num < 0 || !Number.isInteger(Number(num))){
             return false; 
         }
         return true;
