@@ -94,7 +94,7 @@ export default function ScoreCard(props){
                     <div className="cell1 pubs">{pub}</div>
                     <div className="cell pubs">{Drinks[index]}</div>
                     <div className="cell pubScore">{Pars[index]}</div>
-                    {pubScores[index] ? <p className="cell scores">{pubScores[index]}</p> : <input className="cell scores" type="number" value={pubScores[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnter(e.target.value)}}} />}
+                    {pubScores[index] ? <p className="cell scores">{pubScores[index]}</p> : <input className="cell scores" type="number" pattern="[0-9]*" value={pubScores[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnter(e.target.value)}}} />}
                     {penalties[index] ? <p className="cell scores">{penalties[index]}</p> : <input className="cell scores" type="number" value={penalties[index]} onKeyDown={(e) => {if (e.key === "Enter") {handleEnterPenalties(e.target.value)}}} />}
                 </div>
             ))}
