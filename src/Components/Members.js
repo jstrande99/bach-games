@@ -1,5 +1,6 @@
 import React from "react";
 import { Players } from './Players/Players';
+import './Styles/Members.css'
 
 export default function Members(props) {
     const handleFirstName = (event) => {
@@ -27,11 +28,13 @@ export default function Members(props) {
 
     return (
         <div className="login body">
-        <form className="inputs" onSubmit={handleSubmit}>
-            <div className="form-group">
-            <input type="text" className="form-control" onChange={handleFirstName} placeholder="First Name" required onKeyUp={(event) => { if (event.key === "Enter") { handleSubmit(event); }}} />
-            </div>
-        </form>
+            <form className="inputs" onSubmit={handleSubmit}>
+                <h3>Join the Pub Games!</h3>
+                <div className="form-group">
+                    <input type="text" className="form-control" onChange={handleFirstName} placeholder="First Name" required onKeyUp={(event) => { if (event.key === "Enter") { handleSubmit(event); }}} />
+                </div>
+                <button className="form-control" onClick={handleSubmit}>Enter Game</button>
+            </form>
         </div>
     );
 };
