@@ -118,10 +118,10 @@ export default function ScoreCard(props){
                     <div className="cell pubScore">{Pars[index]}</div>
                     {pubScores[index] !== "" ? 
                         <p className="cell scores">{pubScores[index]}</p> : 
-                        <input className="cell scores" type="number" pattern="[0-9]* [enter]" value={pubScores[index]} onChange={(e) => handleEnter(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnter(e.target.value, index)}}} />}
+                        <input className="cell scores" type="number" pattern="[0-9]*" value={pubScores[index]} onChange={(e) => handleEnter(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnter(e.target.value, index)}}} />}
                     {penalties[index] !== "" ? 
                         <p className="cell scores">{penalties[index]}</p> : 
-                        <input className="cell scores" type="number" value={penalties[index]} onChange={(e) => handleEnterPenalties(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnterPenalties(e.target.value, index)}}} />}
+                        <input className="cell scores" type="number" pattern="[0-9]*" value={penalties[index]} onChange={(e) => handleEnterPenalties(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnterPenalties(e.target.value, index)}}} />}
                 </div>
             ))}
             <div>Total: {total}</div>
