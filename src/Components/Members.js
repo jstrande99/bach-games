@@ -27,7 +27,7 @@ export default function Members(props) {
     };
 
     return (
-        <div className="login body">
+        <div className="login">
             <form className="inputs" onSubmit={handleSubmit}>
                 <h3>Join the Pub Games!</h3>
                 <div className="form-group">
