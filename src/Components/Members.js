@@ -30,6 +30,7 @@ export default function Members(props) {
         <form className="inputs" onSubmit={handleSubmit}>
             <div className="form-group">
             <input type="text" className="form-control" onChange={handleFirstName} placeholder="First Name" required onKeyUp={(event) => { if (event.key === "Enter") { handleSubmit(event); }}} />
+            <button onClick={handleSubmit}>Enter Game</button>
             </div>
         </form>
         </div>
