@@ -144,6 +144,7 @@ export default function ScoreCard(props) {
     return (
         <div className="body">
             <h2>Leader: {leader}</h2>
+            <button className="btn" onClick={() => updateLeaderBoard()}>Update board</button>
             <div onClick={() => handleLeaderBoard()}>
                 <p>Show Leaders</p>
                 {leaderBoardOpen && (
