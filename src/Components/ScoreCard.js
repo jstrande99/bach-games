@@ -22,6 +22,8 @@ export default function ScoreCard(props){
     const [pubScores, setPubScores] = useState(Pubs.map(() => ""));
     const [penalties, setPenalties] = useState(Pubs.map(() => ""));
     const [leader, setLeader] = useState("");
+    const [leaderBoard, setLeaderBoard] = useState([]);
+    const [leaderBoardOpen, setLeaderBoardOpen] = useState(false);
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
@@ -47,13 +49,12 @@ export default function ScoreCard(props){
 
       useEffect(() => {
         const fetchLowestTotal = async () => {
-            const querySnapshot = await firestore.collection("Players")
-                .orderBy("Total")
-                .get();
+            const querySnapshot = await firestore.collection("Players").orderBy("Total").get();
             if (!querySnapshot.empty) {
                 const doc = querySnapshot.docs[0];
                 const data = doc.data();
                 setLeader(data.Player);
+                setLeaderBoard(querySnapshot.docs.map(doc => doc.data()));
             }
             let sum = 0;
             pubScores.forEach((score) => { sum += Number(score);});
@@ -79,31 +80,45 @@ export default function ScoreCard(props){
     }
 
     const handleEnter = (num, index) => {
-        let numberCheck = checkNumber(num);
-        if(numberCheck){
-            const newPubScores = [...pubScores];
-            newPubScores[index] = num;
-            setPubScores(newPubScores);
-            firestore.collection("Players").doc(props.name.toLowerCase()).update({ Scores: newPubScores});
-        }else{
-            alert("Not valid number");
+        if(num !== undefined){
+            let numberCheck = checkNumber(num);
+            if(numberCheck){
+                const newPubScores = [...pubScores];
+                newPubScores[index] = num;
+                setPubScores(newPubScores);
+                firestore.collection("Players").doc(props.name.toLowerCase()).update({ Scores: newPubScores});
+            }else{
+                alert("Not valid number");
+            }
         }
     }
     const handleEnterPenalties = (num, index) => {
-        let numberCheck = checkNumber(num);
-        if(numberCheck) {
-            const newPenalties = [...penalties];
-            newPenalties[index] = num;
-            setPenalties(newPenalties);
-            firestore.collection("Players").doc(props.name.toLowerCase()).update({ Penalties: newPenalties});
-        } else{
-            alert("Not valid number");
+        if(num !== undefined){
+            let numberCheck = checkNumber(num);
+            if(numberCheck) {
+                const newPenalties = [...penalties];
+                newPenalties[index] = num;
+                setPenalties(newPenalties);
+                firestore.collection("Players").doc(props.name.toLowerCase()).update({ Penalties: newPenalties});
+            } else{
+                alert("Not valid number");
+            }
         }
+    }
+    const handleLeaderBoard = () => {
+        setLeaderBoardOpen(!leaderBoardOpen);
     }
 
     return (
         <div className="body">
             <h2>Leader: {leader}</h2>
+            <div className="leaderBoard" onClick={() => handleLeaderBoard()}>
+                <p>Show Leaders</p>
+                {leaderBoardOpen && ( <div>
+                {leaderBoard?.map((play, index) => (
+                    <p key={index}>{index + 1}. {play.Player} : {play.Total} </p>
+                ))}</div>)}
+            </div>
             <div className="row header">
                 <div className="cell1">Hole</div>
                 <div className="cell">Drinks</div>
@@ -116,9 +131,7 @@ export default function ScoreCard(props){
                     <div className="cell1 pubs">{pub}</div>
                     <div className="cell pubs">{Drinks[index]}</div>
                     <div className="cell pubScore">{Pars[index]}</div>
-                    {pubScores[index] !== "" ? 
-                        <p className="cell scores">{pubScores[index]}</p> : 
-                        <input className="cell scores" type="number" pattern="[0-9]*" value={pubScores[index]} onChange={(e) => handleEnter(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnter(e.target.value, index)}}} />}
+                    <input className="cell scores" type="number" pattern="[0-9]*" value={pubScores[index]} onChange={(e) => handleEnter(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnter(e.target.value, index)}}} />
                     <input className="cell scores" type="number" pattern="[0-9]*" value={penalties[index]} onChange={(e) => handleEnterPenalties(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnterPenalties(e.target.value, index)}}} />
                 </div>
             ))}
