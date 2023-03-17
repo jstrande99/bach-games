@@ -25,6 +25,7 @@ export default function ScoreCard(props){
     const [leaderBoard, setLeaderBoard] = useState([]);
     const [leaderBoardOpen, setLeaderBoardOpen] = useState(false);
     const [total, setTotal] = useState(0);
+    const [currentHole, setCurrentHole] = useState(0);
 
     useEffect(() => {
         const fetchScores = async () => {
@@ -35,13 +36,16 @@ export default function ScoreCard(props){
               setPubScores(data.Scores);
               setTotal(data.Total);
               setPenalties(data.Penalties);
+              setCurrentHole(data.CurrentHole);
             } else {
               await docRef.set({ 
-                Player: props.name.toLowerCase(), 
-                Total: 0, 
-                Scores: [],
-                Penalties: [],
+                    Player: props.name.toLowerCase(), 
+                    Total: 0, 
+                    Scores: [],
+                    Penalties: [],
+                    CurrentHole: 1,
                 });
+                setCurrentHole(1);
             }
           };
           fetchScores();
@@ -86,7 +90,7 @@ export default function ScoreCard(props){
                 const newPubScores = [...pubScores];
                 newPubScores[index] = num;
                 setPubScores(newPubScores);
-                firestore.collection("Players").doc(props.name.toLowerCase()).update({ Scores: newPubScores});
+                firestore.collection("Players").doc(props.name.toLowerCase()).update({ Scores: newPubScores, CurrentHole: index + 1,});
                 updateLeaderBoard();
             }else{
                 alert("Not valid number");
@@ -114,6 +118,7 @@ export default function ScoreCard(props){
             const data = doc.data();
             setLeader(data.Player);
             setLeaderBoard(querySnapshot.docs.map(doc => doc.data()));
+            setCurrentHole(data.CurrentHole);
         }
     }
     const handleLeaderBoard = () => {
@@ -129,7 +134,7 @@ export default function ScoreCard(props){
                 <p>Show Leaders</p>
                 {leaderBoardOpen && ( <div>
                 {leaderBoard?.map((play, index) => (
-                    <p key={index}>{index + 1}. {play.Player} : {play.Total} </p>
+                    <p key={index}>{index + 1}. {play.Player} : {play.Total} On Hole: {currentHole}</p>
                 ))}</div>)}
             </div>
             <div className="row header">
