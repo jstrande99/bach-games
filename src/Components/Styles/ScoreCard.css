@@ -91,4 +91,5 @@ input{
   height: 25px;
   border-radius: 10px;
   border: none;
+  z-index: 1000;
 }
