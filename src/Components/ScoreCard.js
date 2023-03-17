@@ -151,7 +151,7 @@ export default function ScoreCard(props) {
                         <div className="leaderBoardContainer">
                             {leaderBoard?.map((play, index) => (
                                 <p key={index}>
-                                    {index + 1}. <b>{play.Player}</b> On Hole: {play.CurrentHole} Score of: {play.Total}
+                                    {index + 1}. <b className="player">{play.Player}</b> <br/>On Hole: {play.CurrentHole} Score of: {play.Total}
                                 </p>
                             ))}
                         </div>

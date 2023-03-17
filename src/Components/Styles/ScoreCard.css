@@ -1,60 +1,60 @@
 .body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    background-color: rgba(255, 127, 127, 0.79);
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: rgba(255, 127, 127, 0.79);
+}
   
-  .row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    padding: 5px;
-    border: 2px solid rgba(0, 0, 0, 0.444);
-    background-color: rgba(128, 128, 128, 0.797);
-  }
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  padding: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.444);
+  background-color: rgba(128, 128, 128, 0.797);
+}
   
-  .header {
-    font-weight: bold;
-  }
-  .cell1{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    text-align: center;
-    border-right: 2px solid rgba(0, 0, 0, 0.444);
-  }
-  .cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 25%;
-    border-right: 2px solid rgba(0, 0, 0, 0.444);
-  }
+.header {
+  font-weight: bold;
+}
+.cell1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  text-align: center;
+  border-right: 2px solid rgba(0, 0, 0, 0.444);
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  border-right: 2px solid rgba(0, 0, 0, 0.444);
+}
   
-  .pubs {
-    font-weight: bold;
-  }
+.pubs {
+  font-weight: bold;
+}
   
-  .pubScore {
-    font-weight: bold;
-    text-align: center;
-  }
+.pubScore {
+  font-weight: bold;
+  text-align: center;
+}
   
-  .scores {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  input{
-    text-align: center;
-  }
+.scores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+input{
+  text-align: center;
+}
 .leaderBoardWrapper {
   height: 100%;
   width: 100%;
@@ -78,9 +78,11 @@
   border-radius: 10px;
   padding-top: 10px;
 }
-  @media (max-width: 600px) {
+  /* @media (max-width: 600px) {
     .cell {
       width: 50%;
     }
-  }
-  
+  } */
+.player{ 
+  font-size: 25px;
+}
