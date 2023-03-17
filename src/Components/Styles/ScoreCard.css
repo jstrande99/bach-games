@@ -86,3 +86,9 @@ input{
 .player{ 
   font-size: 25px;
 }
+.btn{
+  width: 50%;
+  height: 25px;
+  border-radius: 10px;
+  border: none;
+}
