@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import "./Styles/ScoreCard.css"
-// import "firebase/compat/storage";
-import {Pubs, Pars, Drinks} from './Players/Pubs';
+import "./Styles/ScoreCard.css";
+import { Pubs, Pars, Drinks } from "./Players/Pubs";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAXNMr9rdcFsVqxuYvu0eRr8YqmSZCUO24",
@@ -12,59 +11,66 @@ const firebaseConfig = {
     storageBucket: "bachparty-fd9ab.appspot.com",
     messagingSenderId: "784821847050",
     appId: "1:784821847050:web:4834747eaa2788999b4bf3",
-    measurementId: "G-1PB27WZYHF"
+    measurementId: "G-1PB27WZYHF",
 };
 
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 
-export default function ScoreCard(props){
+export default function ScoreCard(props) {
     const [pubScores, setPubScores] = useState(Pubs.map(() => ""));
     const [penalties, setPenalties] = useState(Pubs.map(() => ""));
     const [leader, setLeader] = useState("");
     const [leaderBoard, setLeaderBoard] = useState([]);
     const [leaderBoardOpen, setLeaderBoardOpen] = useState(false);
     const [total, setTotal] = useState(0);
-    const [currentHole, setCurrentHole] = useState(0);
 
     useEffect(() => {
         const fetchScores = async () => {
-            const docRef = firestore.collection("Players").doc(props.name.toLowerCase());
+            const docRef = firestore
+                .collection("Players")
+                .doc(props.name.toLowerCase());
             const doc = await docRef.get();
             if (doc.exists) {
-              const data = doc.data();
-              setPubScores(data.Scores);
-              setTotal(data.Total);
-              setPenalties(data.Penalties);
-              setCurrentHole(data.CurrentHole);
+                const data = doc.data();
+                setPubScores(data.Scores);
+                setTotal(data.Total);
+                setPenalties(data.Penalties);
             } else {
-              await docRef.set({ 
-                    Player: props.name.toLowerCase(), 
-                    Total: 0, 
+                await docRef.set({
+                    Player: props.name.toLowerCase(),
+                    Total: 0,
                     Scores: [],
                     Penalties: [],
                     CurrentHole: 1,
                 });
-                setCurrentHole(1);
             }
-          };
-          fetchScores();
-      }, [props.name]);
+        };
+        fetchScores();
+    }, [props.name]);
 
-      useEffect(() => {
+    useEffect(() => {
         const fetchLowestTotal = async () => {
-            const querySnapshot = await firestore.collection("Players").orderBy("Total").get();
+            const querySnapshot = await firestore
+                .collection("Players")
+                .orderBy("Total")
+                .get();
             if (!querySnapshot.empty) {
                 const doc = querySnapshot.docs[0];
                 const data = doc.data();
                 setLeader(data.Player);
-                setLeaderBoard(querySnapshot.docs.map(doc => doc.data()));
+                setLeaderBoard(querySnapshot.docs.map((doc) => doc.data()));
             }
             let sum = 0;
-            pubScores.forEach((score) => { sum += Number(score);});
-            penalties.forEach((pen) => {sum += Number(pen);});
+            pubScores.forEach((score) => {
+                sum += Number(score);
+            });
+            penalties.forEach((pen) => {
+                sum += Number(pen);
+            });
             setTotal(sum);
-            const querySnapshot1 = await firestore.collection("Players")
+            const querySnapshot1 = await firestore
+                .collection("Players")
                 .where("Player", "==", props.name.toLowerCase())
                 .get();
 
@@ -74,68 +80,83 @@ export default function ScoreCard(props){
             }
         };
         fetchLowestTotal();
-      }, [pubScores, penalties, props.name]);
+    }, [pubScores, penalties, props.name]);
 
     const checkNumber = (num) => {
-        if(num < 0 || !Number.isInteger(Number(num))){
-            return false; 
+        if (num < 0 || !Number.isInteger(Number(num))) {
+            return false;
         }
         return true;
-    }
+    };
 
     const handleEnter = (num, index) => {
-        if(num !== undefined){
+        if (num !== undefined) {
             let numberCheck = checkNumber(num);
-            if(numberCheck){
+            if (numberCheck) {
                 const newPubScores = [...pubScores];
                 newPubScores[index] = num;
                 setPubScores(newPubScores);
-                firestore.collection("Players").doc(props.name.toLowerCase()).update({ Scores: newPubScores, CurrentHole: index + 1,});
+                firestore
+                    .collection("Players")
+                    .doc(props.name.toLowerCase())
+                    .update({ Scores: newPubScores, CurrentHole: index + 1 });
                 updateLeaderBoard();
-            }else{
+            } else {
                 alert("Not valid number");
             }
         }
-    }
+    };
     const handleEnterPenalties = (num, index) => {
-        if(num !== undefined){
+        if (num !== undefined) {
             let numberCheck = checkNumber(num);
-            if(numberCheck) {
+            if (numberCheck) {
                 const newPenalties = [...penalties];
                 newPenalties[index] = num;
                 setPenalties(newPenalties);
-                firestore.collection("Players").doc(props.name.toLowerCase()).update({ Penalties: newPenalties});
+                firestore
+                    .collection("Players")
+                    .doc(props.name.toLowerCase())
+                    .update({ Penalties: newPenalties });
                 updateLeaderBoard();
-            } else{
+            } else {
                 alert("Not valid number");
             }
         }
-    }
+    };
     const updateLeaderBoard = async () => {
-        const querySnapshot = await firestore.collection("Players").orderBy("Total").get();
+        const querySnapshot = await firestore
+            .collection("Players")
+            .orderBy("Total")
+            .get();
         if (!querySnapshot.empty) {
             const doc = querySnapshot.docs[0];
             const data = doc.data();
             setLeader(data.Player);
-            setLeaderBoard(querySnapshot.docs.map(doc => doc.data()));
-            setCurrentHole(data.CurrentHole);
+            setLeaderBoard(querySnapshot.docs.map((doc) => doc.data()));
         }
-    }
+    };
     const handleLeaderBoard = () => {
         setLeaderBoardOpen(!leaderBoardOpen);
-    }
+    };
     useEffect(() => {
         updateLeaderBoard();
     }, [total]);
     return (
         <div className="body">
             <h2>Leader: {leader}</h2>
-            <div className="leaderBoard" onClick={() => handleLeaderBoard()}>
+            <div onClick={() => handleLeaderBoard()}>
                 <p>Show Leaders</p>
-                {leaderBoardOpen && ( <div>
-                {leaderBoard?.map((play, index) => (
-                    <p key={index}>{index + 1}. {play.Player} : {play.Total} On Hole: {currentHole}</p>
-                ))}</div>)}
+                {leaderBoardOpen && (
+                    <div className="leadBoardWapper">
+                        <div className="leaderBoardContainer">
+                            {leaderBoard?.map((play, index) => (
+                                <p key={index}>
+                                    {index + 1}. <b>{play.Player}</b> On Hole: {play.CurrentHole} Score of: {play.Total}
+                                </p>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
             <div className="row header">
                 <div className="cell1">Hole</div>
@@ -149,8 +170,32 @@ export default function ScoreCard(props){
                     <div className="cell1 pubs">{pub}</div>
                     <div className="cell pubs">{Drinks[index]}</div>
                     <div className="cell pubScore">{Pars[index]}</div>
-                    <input className="cell scores" type="number" pattern="[0-9]*" value={pubScores[index]} onChange={(e) => handleEnter(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnter(e.target.value, index)}}} />
-                    <input className="cell scores" type="number" pattern="[0-9]*" value={penalties[index]} onChange={(e) => handleEnterPenalties(e.target.value, index)} onKeyDown={(e) => {if (Number(e.key)) {handleEnterPenalties(e.target.value, index)}}} />
+                    <input
+                        className="cell scores"
+                        type="number"
+                        pattern="[0-9]*"
+                        value={pubScores[index] || ""}
+                        onChange={(e) => handleEnter(e.target.value, index)}
+                        onKeyDown={(e) => {
+                            if (Number(e.key)) {
+                                handleEnter(e.target.value, index);
+                            }
+                        }}
+                    />
+                    <input
+                        className="cell scores"
+                        type="number"
+                        pattern="[0-9]*"
+                        value={penalties[index] || ""}
+                        onChange={(e) =>
+                            handleEnterPenalties(e.target.value, index)
+                        }
+                        onKeyDown={(e) => {
+                            if (Number(e.key)) {
+                                handleEnterPenalties(e.target.value, index);
+                            }
+                        }}
+                    />
                 </div>
             ))}
             <div>Total: {total}</div>
@@ -163,4 +208,4 @@ export default function ScoreCard(props){
             <li>(+6) Refused Service</li>
         </div>
     );
-};
+}
