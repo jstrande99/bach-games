@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "./Styles/ScoreCard.css";
 import { Pubs, Pars, Drinks } from "./Players/Pubs";
+import { Link } from "react-router-dom";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAXNMr9rdcFsVqxuYvu0eRr8YqmSZCUO24",
@@ -143,6 +144,9 @@ export default function ScoreCard(props) {
     }, [total]);
     return (
         <div className="body">
+            <Link to='/Map' className="nav-links">
+                <button className="submit gal"> View Map</button>
+            </Link>
             <h2>Leader: {leader}</h2>
             <button className="btn" onClick={() => updateLeaderBoard()}>Update board</button>
             <div onClick={() => handleLeaderBoard()}>
