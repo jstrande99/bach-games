@@ -87,6 +87,7 @@ export default function ScoreCard(props){
                 newPubScores[index] = num;
                 setPubScores(newPubScores);
                 firestore.collection("Players").doc(props.name.toLowerCase()).update({ Scores: newPubScores});
+                updateLeaderBoard();
             }else{
                 alert("Not valid number");
             }
@@ -100,15 +101,27 @@ export default function ScoreCard(props){
                 newPenalties[index] = num;
                 setPenalties(newPenalties);
                 firestore.collection("Players").doc(props.name.toLowerCase()).update({ Penalties: newPenalties});
+                updateLeaderBoard();
             } else{
                 alert("Not valid number");
             }
         }
     }
+    const updateLeaderBoard = async () => {
+        const querySnapshot = await firestore.collection("Players").orderBy("Total").get();
+        if (!querySnapshot.empty) {
+            const doc = querySnapshot.docs[0];
+            const data = doc.data();
+            setLeader(data.Player);
+            setLeaderBoard(querySnapshot.docs.map(doc => doc.data()));
+        }
+    }
     const handleLeaderBoard = () => {
         setLeaderBoardOpen(!leaderBoardOpen);
     }
-
+    useEffect(() => {
+        updateLeaderBoard();
+    }, [total]);
     return (
         <div className="body">
             <h2>Leader: {leader}</h2>
