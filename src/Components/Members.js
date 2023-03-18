@@ -29,11 +29,11 @@ export default function Members(props) {
     return (
         <div className="login">
             <form className="inputs" onSubmit={handleSubmit}>
-                <h3>Join the Pub Games!</h3>
+                <h3 className="form-control">2023 Heavenly<br/>Pub Golf</h3>
                 <div className="form-group">
-                    <input type="text" className="form-control" onChange={handleFirstName} placeholder="First Name" required onKeyUp={(event) => { if (event.key === "Enter") { handleSubmit(event); }}} />
+                    <input type="text" className="form-control" onChange={handleFirstName} placeholder="Enter First Name" required onKeyUp={(event) => { if (event.key === "Enter") { handleSubmit(event); }}} />
                 </div>
-                <button className="form-control" onClick={handleSubmit}>Enter Game</button>
+                <button className="form-control btnTee" onClick={handleSubmit}>Tee Off!</button>
             </form>
         </div>
     );
