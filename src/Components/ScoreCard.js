@@ -206,7 +206,7 @@ export default function ScoreCard(props) {
                 </div>
             ))}
             {/* <div>Total: {total}</div> */}
-            <h2>Leader: {leader}</h2>
+            <h2>Current Leader: {leader}</h2>
             <button className="updateBTN" onClick={() => updateLeaderBoard()}>Update Scoreboard</button>
             <div className="rulesHazzards">
                 <h5>Rules:</h5>
