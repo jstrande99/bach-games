@@ -50,6 +50,7 @@ export default function ScoreCard(props) {
             }
         };
         fetchScores();
+        window.scrollTo(0, 0);
     }, [props.name]);
 
     useEffect(() => {
