@@ -74,7 +74,7 @@ input{
   transform: translate(-50%, -50%);
   background-color: rgb(53, 78, 63);
   width: 85vw;
-  height: 90vh;
+  height: 80vh;
   border-radius: 5px;
   text-align: center;
   border: 2px solid white;
@@ -103,6 +103,8 @@ input{
   background-color: rgb(77, 116, 92);
   color: white;
   border: 1px solid white;
+}
+.refreshBTN{
   z-index: 1000;
 }
 .maps{
