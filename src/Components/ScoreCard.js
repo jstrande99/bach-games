@@ -179,7 +179,7 @@ export default function ScoreCard(props) {
                                     ))}
                                 </tbody>
                             </table>
-                            <button className="updateBTN" onClick={() => updateLeaderBoard()}>Refresh Scoreboard</button>
+                            <button className="updateBTN refreshBTN" onClick={() => updateLeaderBoard()}>Refresh Scoreboard</button>
                         </div>
                     </div>
                 )}
