@@ -72,27 +72,38 @@ input{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fb8989; 
-  width: 75vw;
-  height: 75vh;
+  background-color: rgb(53, 78, 63);
+  width: 85vw;
+  height: 90vh;
   border-radius: 5px;
   text-align: center;
-  border: 2px solid black;
+  border: 2px solid white;
   border-radius: 10px;
   padding-top: 15px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
-.player{ 
-  font-size: 25px;
+.leaderTable th {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid white;
+}
+.leaderTable td{
+  padding: 5px;
+  border-bottom: 1px solid white;
 }
 .updateBTN{
   width: auto;
   height: 25px;
   border-radius: 5px;
   border: none;
-  z-index: 1000;
   background-color: rgb(77, 116, 92);
   color: white;
   border: 1px solid white;
+  z-index: 1000;
 }
 .maps{
   height: 5vh;
@@ -104,6 +115,19 @@ input{
   position: absolute;
   margin-bottom: 10px;
   right: 15vw;
+}
+.podiumOpenBoard{
+  height: 10vh;
+  margin-bottom: 0px;
+}
+.scoreboardTTL h2{
+  margin: 0px;
+}
+.exitBTN{
+  position: absolute;
+  top: 0;
+  right: 6vw;
+  padding: 0px 10px 5px 10px;
 }
 .tittleHeader{
   text-align: center;
