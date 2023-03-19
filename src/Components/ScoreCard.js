@@ -209,7 +209,13 @@ export default function ScoreCard(props) {
             <h2>Leader: {leader}</h2>
             <button className="btn" onClick={() => updateLeaderBoard()}>Update board</button>
             <div className="rulesHazzards">
-                <h3>Hazards:</h3>
+                <h5>Rules:</h5>
+                <p>Each sip counts as a stroke</p>
+                <p>Count your sips to finish your drink</p>
+                <p>This is your score for the hole</p>
+                <p>Account for any penalties incurred</p>
+                <p>Record score and move on to the next hole</p>
+                <h5 className="hazzards">Hazards:</h5>
                 <p>(+2) Break the seal before hole 2</p>
                 <p>(+3) Spill a drink; Yours or anyone elses</p>
                 <p>(+5) Miss a hole</p>
