@@ -115,3 +115,10 @@ input{
 .tittleHeader{
   text-align: center;
 }
+.rulesHazzards h3{ 
+  margin-bottom: 0px;
+}
+.rulesHazzards p{
+  font-size: 10px;
+  margin: 2px;
+}

@@ -190,7 +190,7 @@ export default function ScoreCard(props) {
                         }}
                     /></div>
                     <div className="cell"><input
-                        className="cell scores"
+                        className="scores"
                         type="number"
                         pattern="[0-9]*"
                         value={penalties[index] || ""}
@@ -208,13 +208,15 @@ export default function ScoreCard(props) {
             {/* <div>Total: {total}</div> */}
             <h2>Leader: {leader}</h2>
             <button className="btn" onClick={() => updateLeaderBoard()}>Update board</button>
-            <h2>Hazards:</h2>
-            <li>(+2) Break the seal before hole 2</li>
-            <li>(+3) Spill a drink; Yours or anyone elses</li>
-            <li>(+5) Miss a hole</li>
-            <li>(+2) Unfinished Drink</li>
-            <li>(+5) Vomit Comet</li>
-            <li>(+6) Refused Service</li>
+            <div className="rulesHazzards">
+                <h3>Hazards:</h3>
+                <p>(+2) Break the seal before hole 2</p>
+                <p>(+3) Spill a drink; Yours or anyone elses</p>
+                <p>(+5) Miss a hole</p>
+                <p>(+2) Unfinished Drink</p>
+                <p>(+5) Vomit Comet</p>
+                <p>(+6) Refused Service</p>
+            </div>
         </div>
     );
 }
