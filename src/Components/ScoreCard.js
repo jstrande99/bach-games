@@ -157,7 +157,7 @@ export default function ScoreCard(props) {
                     <div className="leadBoardWapper">
                         <div className="leaderBoardContainer">
                             <div className="scoreboardTTL">
-                                <h1 className="exitBTN">&times;</h1>
+                                <h1 className="exitBTN" onClick={() => handleLeaderBoard()}>&times;</h1>
                                 <img src={Podium} alt="Leader Board" className="podiumOpenBoard"/>
                                 <h2>Scoreboard</h2>
                             </div>
