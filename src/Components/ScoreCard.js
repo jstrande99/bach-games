@@ -151,16 +151,35 @@ export default function ScoreCard(props) {
             <Link to='/Map' className="nav-links">
                 <img src={MapIcon} alt="Look at map" className="maps"/>
             </Link>
-            <div onClick={() => handleLeaderBoard()}>
-                <img src={Podium} alt="Leader Board" className="podium"/>
+            <div>
+                <img src={Podium} alt="Leader Board" className="podium" onClick={() => handleLeaderBoard()}/>
                 {leaderBoardOpen && (
                     <div className="leadBoardWapper">
                         <div className="leaderBoardContainer">
-                            {leaderBoard?.map((play, index) => (
-                                <p key={index}>
-                                    {index + 1}. <b className="player">{play.Player}</b> <br/>On Hole: {play.CurrentHole} Score of: {play.Total}
-                                </p>
-                            ))}
+                            <div className="scoreboardTTL">
+                                <h1 className="exitBTN">&times;</h1>
+                                <img src={Podium} alt="Leader Board" className="podiumOpenBoard"/>
+                                <h2>Scoreboard</h2>
+                            </div>
+                            <table className="leaderTable">
+                                <thead>
+                                    <tr>
+                                    <th>Name</th>
+                                    <th>On Hole</th>
+                                    <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {leaderBoard?.map((play, index) => (
+                                    <tr key={index}>
+                                        <td><b className="player">{play.Player}</b></td>
+                                        <td>{play.CurrentHole}</td>
+                                        <td>{play.Total}</td>
+                                    </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            <button className="updateBTN" onClick={() => updateLeaderBoard()}>Refresh Scoreboard</button>
                         </div>
                     </div>
                 )}
