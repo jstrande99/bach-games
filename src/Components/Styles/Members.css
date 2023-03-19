@@ -3,7 +3,8 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: rgba(255, 127, 127, 0.79);
+    color: white;
+    background-color: rgb(53, 78, 63);
 }
 .inputs {
     display: flex;
@@ -16,5 +17,25 @@
     height: 30px;
     font-size: 20px;
     margin: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+.nameInput{
+    background-color: rgb(77, 116, 92);
+    color: white;
+    border: 1px solid white;
+}
+.nameInput::placeholder{
+    color: white;
+}
+.btnTee{
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+.beerhole{
+    height: 25vh;
+}
+.ttl{
+    margin-bottom: 8vh;
 }
