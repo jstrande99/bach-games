@@ -175,8 +175,8 @@ export default function ScoreCard(props) {
                     <div className="cell1 pubs">{pub}</div>
                     <div className="cell pubs">{Drinks[index]}</div>
                     <div className="cell pubScore">{Pars[index]}</div>
-                    <input
-                        className="cell scores"
+                    <div className="cell"><input
+                        className="scores"
                         type="number"
                         pattern="[0-9]*"
                         value={pubScores[index] || ""}
@@ -186,8 +186,8 @@ export default function ScoreCard(props) {
                                 handleEnter(e.target.value, index);
                             }
                         }}
-                    />
-                    <input
+                    /></div>
+                    <div className="cell"><input
                         className="cell scores"
                         type="number"
                         pattern="[0-9]*"
@@ -200,7 +200,7 @@ export default function ScoreCard(props) {
                                 handleEnterPenalties(e.target.value, index);
                             }
                         }}
-                    />
+                    /></div>
                 </div>
             ))}
             <div>Total: {total}</div>
