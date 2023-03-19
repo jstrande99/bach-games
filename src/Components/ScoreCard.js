@@ -4,6 +4,8 @@ import "firebase/compat/firestore";
 import "./Styles/ScoreCard.css";
 import { Pubs, Pars, Drinks } from "./Players/Pubs";
 import { Link } from "react-router-dom";
+import MapIcon from "./Styles/Images/MapIcon.png";
+import Podium from "./Styles/Images/Podium.png";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAXNMr9rdcFsVqxuYvu0eRr8YqmSZCUO24",
@@ -144,13 +146,12 @@ export default function ScoreCard(props) {
     }, [total]);
     return (
         <div className="body">
+            <h2 className="tittleHeader">2023 Heavenly<br/>Pub Golf</h2>
             <Link to='/Map' className="nav-links">
-                <button className="submit gal"> View Map</button>
+                <img src={MapIcon} alt="Look at map" className="maps"/>
             </Link>
-            <h2>Leader: {leader}</h2>
-            <button className="btn" onClick={() => updateLeaderBoard()}>Update board</button>
             <div onClick={() => handleLeaderBoard()}>
-                <p>Show Leaders</p>
+                <img src={Podium} alt="Leader Board" className="podium"/>
                 {leaderBoardOpen && (
                     <div className="leadBoardWapper">
                         <div className="leaderBoardContainer">
@@ -168,7 +169,7 @@ export default function ScoreCard(props) {
                 <div className="cell">Drinks</div>
                 <div className="cell">Par</div>
                 <div className="cell">Score</div>
-                <div className="cell">Penalties</div>
+                <div className="cell">Penal</div>
             </div>
             {Pubs.map((pub, index) => (
                 <div className="row" key={index}>
@@ -203,7 +204,9 @@ export default function ScoreCard(props) {
                     /></div>
                 </div>
             ))}
-            <div>Total: {total}</div>
+            {/* <div>Total: {total}</div> */}
+            <h2>Leader: {leader}</h2>
+            <button className="btn" onClick={() => updateLeaderBoard()}>Update board</button>
             <h2>Hazards:</h2>
             <li>(+2) Break the seal before hole 2</li>
             <li>(+3) Spill a drink; Yours or anyone elses</li>
