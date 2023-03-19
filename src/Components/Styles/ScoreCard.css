@@ -7,7 +7,6 @@
   background-color: rgb(53, 78, 63);
   color: white;
 }
-  
 .row {
   display: flex;
   flex-direction: row;
@@ -16,7 +15,6 @@
   margin: 2px;
   background-color: rgb(53, 78, 63);
 }
-  
 .header {
   font-weight: bold;
   margin-top: 5vh;
@@ -37,16 +35,13 @@
   width: 55%;
   border-bottom: 2px solid white;
 }
-  
 .pubs {
   font-weight: bold;
 }
-  
 .pubScore {
   font-weight: bold;
   text-align: center;
 }
-  
 .scores {
   display: flex;
   flex-direction: column;
@@ -86,20 +81,18 @@ input{
   border-radius: 10px;
   padding-top: 15px;
 }
-  /* @media (max-width: 600px) {
-    .cell {
-      width: 50%;
-    }
-  } */
 .player{ 
   font-size: 25px;
 }
-.btn{
-  width: 50%;
+.updateBTN{
+  width: auto;
   height: 25px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
   z-index: 1000;
+  background-color: rgb(77, 116, 92);
+  color: white;
+  border: 1px solid white;
 }
 .maps{
   height: 5vh;
