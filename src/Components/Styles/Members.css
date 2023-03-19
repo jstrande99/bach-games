@@ -20,8 +20,22 @@
     border-radius: 5px;
     text-align: center;
 }
+.nameInput{
+    background-color: rgb(77, 116, 92);
+    color: white;
+    border: 1px solid white;
+}
+.nameInput::placeholder{
+    color: white;
+}
 .btnTee{
     background-color: transparent;
     color: white;
     border: 2px solid white;
+}
+.beerhole{
+    height: 25vh;
+}
+.ttl{
+    margin-bottom: 8vh;
 }
