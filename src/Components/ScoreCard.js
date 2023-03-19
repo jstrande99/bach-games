@@ -207,7 +207,7 @@ export default function ScoreCard(props) {
             ))}
             {/* <div>Total: {total}</div> */}
             <h2>Leader: {leader}</h2>
-            <button className="btn" onClick={() => updateLeaderBoard()}>Update board</button>
+            <button className="updateBTN" onClick={() => updateLeaderBoard()}>Update Scoreboard</button>
             <div className="rulesHazzards">
                 <h5>Rules:</h5>
                 <p>Each sip counts as a stroke</p>
