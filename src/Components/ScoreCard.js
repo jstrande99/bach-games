@@ -195,7 +195,7 @@ export default function ScoreCard(props) {
         const playersRef = firestore.collection("Players");
         const playersSnapshot = await playersRef.get();
         playersSnapshot.forEach(async (doc) => {
-            await doc.ref.update({ Scores: Array(10).fill(0), Penalties: Array(10).fill(0), Total: 0 });
+            await doc.ref.update({ Scores: Array(10).fill(0), Penalties: Array(10).fill(0), Total: 0, CurrentHole: 1 });
         });
         updateLeaderBoard();
     };
