@@ -3,7 +3,6 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "./Styles/ScoreCard.css";
 import { Pubs, Pars, Drinks } from "./Players/Pubs";
-// import { Link } from "react-router-dom";
 import MapIcon from "./Styles/Images/MapIcon.png";
 import Podium from "./Styles/Images/Podium.png";
 
@@ -11,6 +10,7 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import L from 'leaflet';
+
 import MarkerIcon1 from './Styles/Images/1marker.png';
 import MarkerIcon2 from './Styles/Images/2marker.png';
 import MarkerIcon3 from './Styles/Images/3marker.png';
@@ -59,7 +59,17 @@ export default function ScoreCard(props) {
         { position: [38.96167, -119.9401], name: '9: Dottys Casino', icon: MarkerIcon9 },
         { position: [38.9621, -119.9413], name: 'End: Hard Rock Casino', icon: MarkerIconEnd },
     ];
-    const locs = [[38.9591, -119.94272],[38.9596, -119.9422],[38.9601, -119.943],[38.9594, -119.94145],[38.9597, -119.9415],[38.9609, -119.9408],[38.961, -119.9407],[38.96115, -119.94055],[38.96167, -119.9401],[38.9621, -119.9413]];
+    const locs = [
+        [38.9591, -119.94272],
+        [38.9596, -119.9422],
+        [38.9601, -119.943],
+        [38.9594, -119.94145],
+        [38.9597, -119.9415],
+        [38.9609, -119.9408],
+        [38.961, -119.9407],
+        [38.96115, -119.94055],
+        [38.96167, -119.9401],
+        [38.9621, -119.9413]];
 
     useEffect(() => {
         const fetchScores = async () => {
@@ -184,9 +194,6 @@ export default function ScoreCard(props) {
     return (
         <div className="body">
             <h2 className="tittleHeader">2023 Heavenly<br/>Pub Golf</h2>
-            {/* <Link className="nav-links">
-                <img src={MapIcon} alt="Look at map" className="maps" onClick={() => handleMap()}/>
-            </Link> */}
             <div className="nav-links"><img src={MapIcon} alt="Look at map" className="maps" onClick={() => handleMap()}/></div>
             {mapOpen &&
                 <div className="leaderBoardContainer">
