@@ -11,7 +11,16 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import L from 'leaflet';
-import MarkerPNG from './Styles/Images/marker-icon-2x.png';
+import MarkerIcon1 from './Styles/Images/1marker.png';
+import MarkerIcon2 from './Styles/Images/2marker.png';
+import MarkerIcon3 from './Styles/Images/3marker.png';
+import MarkerIcon4 from './Styles/Images/4marker.png';
+import MarkerIcon5 from './Styles/Images/5marker.png';
+import MarkerIcon6 from './Styles/Images/6marker.png';
+import MarkerIcon7 from './Styles/Images/7marker.png';
+import MarkerIcon8 from './Styles/Images/8marker.png';
+import MarkerIcon9 from './Styles/Images/9marker.png';
+import MarkerIconEnd from './Styles/Images/Endmarker.png';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAXNMr9rdcFsVqxuYvu0eRr8YqmSZCUO24",
@@ -39,22 +48,18 @@ export default function ScoreCard(props) {
     const positions = [38.9608, -119.9415];
 
     const locations = [
-        { position: [38.9591, -119.94272], name: 'Location 1' },
-        { position: [38.9596, -119.9422], name: 'Location 2' },
-        { position: [38.9601, -119.943], name: 'Location 3' },
-        { position: [38.9594, -119.94145], name: 'Location 4' },
-        { position: [38.9597, -119.9415], name: 'Location 5' },
-        { position: [38.9609, -119.9408], name: 'Location 6' },
-        { position: [38.961, -119.9407], name: 'Location 7' },
-        { position: [38.96115, -119.94055], name: 'Location 8' },
-        { position: [38.96167, -119.9401], name: 'Location 9' },
-        { position: [38.9621, -119.9413], name: 'End' },
+        { position: [38.9591, -119.94272], name: '1: MCPS Taphouse & Grill', icon: MarkerIcon1 },
+        { position: [38.9596, -119.9422], name: '2: Sports Bar', icon: MarkerIcon2 },
+        { position: [38.9601, -119.943], name: '3: Harvey’s Lake Tahoe casino', icon: MarkerIcon3 },
+        { position: [38.9594, -119.94145], name: '4: Hurrah Lake Tahoe', icon: MarkerIcon4 },
+        { position: [38.9597, -119.9415], name: '5: Tahoe Club Crawl', icon: MarkerIcon5 },
+        { position: [38.9609, -119.9408], name: '6: Peek Night Club', icon: MarkerIcon6 },
+        { position: [38.961, -119.9407], name: '7: Lake Tahoe AlewarX', icon: MarkerIcon7 },
+        { position: [38.96115, -119.94055], name: '8: Lucky Beaver Bar', icon: MarkerIcon8 },
+        { position: [38.96167, -119.9401], name: '9: Dottys Casino', icon: MarkerIcon9 },
+        { position: [38.9621, -119.9413], name: 'End: Hard Rock Casino', icon: MarkerIconEnd },
     ];
     const locs = [[38.9591, -119.94272],[38.9596, -119.9422],[38.9601, -119.943],[38.9594, -119.94145],[38.9597, -119.9415],[38.9609, -119.9408],[38.961, -119.9407],[38.96115, -119.94055],[38.96167, -119.9401],[38.9621, -119.9413]];
-    const customIcon = L.icon({
-        iconUrl: MarkerPNG,
-        iconSize: [50, 50]
-    });
 
     useEffect(() => {
         const fetchScores = async () => {
@@ -193,7 +198,7 @@ export default function ScoreCard(props) {
                         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                         <Polyline pathOptions={{ color: 'blue', dashArray: '10, 10' }} positions={locs} />
                         {locations.map((location, index) => (
-                            <Marker key={index} position={location.position} icon={customIcon}>
+                            <Marker key={index} position={location.position} icon={L.icon({iconUrl: location.icon, iconSize: [25, 40]})}>
                                 <Popup>{location.name}</Popup>
                             </Marker>
                         ))}
