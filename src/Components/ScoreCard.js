@@ -36,8 +36,8 @@ firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 
 export default function ScoreCard(props) {
-    const [pubScores, setPubScores] = useState(Pubs.map(() => ""));
-    const [penalties, setPenalties] = useState(Pubs.map(() => ""));
+    const [pubScores, setPubScores] = useState(Pubs.map(() => 0));
+    const [penalties, setPenalties] = useState(Pubs.map(() => 0));
     const [leader, setLeader] = useState("");
     const [leaderBoard, setLeaderBoard] = useState([]);
     const [leaderBoardOpen, setLeaderBoardOpen] = useState(false);
@@ -191,6 +191,15 @@ export default function ScoreCard(props) {
     useEffect(() => {
         updateLeaderBoard();
     }, [total]);
+    const handleClearInputs = async () => {
+        const playersRef = firestore.collection("Players");
+        const playersSnapshot = await playersRef.get();
+        playersSnapshot.forEach(async (doc) => {
+            await doc.ref.update({ Scores: Array(10).fill(0), Penalties: Array(10).fill(0), Total: 0 });
+        });
+        updateLeaderBoard();
+    };
+
     return (
         <div className="body">
             <h2 className="tittleHeader">2023 Heavenly<br/>Pub Golf</h2>
@@ -285,7 +294,6 @@ export default function ScoreCard(props) {
                     /></div>
                 </div>
             ))}
-            {/* <div>Total: {total}</div> */}
             <h2>Current Leader: {leader}</h2>
             <button className="updateBTN" onClick={() => updateLeaderBoard()}>Update Scoreboard</button>
             <div className="rulesHazzards">
@@ -303,6 +311,8 @@ export default function ScoreCard(props) {
                 <p>(+5) Vomit Comet</p>
                 <p>(+6) Refused Service</p>
             </div>
+            {props.name.toLowerCase() === 'jordan' && <button onClick={handleClearInputs} className="updateBTN">Clear All Inputs</button>}
+            <p>Created by the Strandes</p>
         </div>
     );
 }
