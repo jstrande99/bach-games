@@ -149,3 +149,10 @@ input{
 .hazzards{
   margin-top: 5px;
 }
+.mapExit{
+  top: -2.5vh;
+}
+.mapTTL{
+  position: absolute;
+  top: -1vh;
+}
