@@ -2,25 +2,12 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "./Styles/ScoreCard.css";
-import { Pubs, Pars, Drinks } from "./Players/Pubs";
+import { Pars, Drinks } from "./Players/Pubs";
 import MapIcon from "./Styles/Images/MapIcon.png";
 import Podium from "./Styles/Images/Podium.png";
 
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
-import L from 'leaflet';
-
-import MarkerIcon1 from './Styles/Images/1marker.png';
-import MarkerIcon2 from './Styles/Images/2marker.png';
-import MarkerIcon3 from './Styles/Images/3marker.png';
-import MarkerIcon4 from './Styles/Images/4marker.png';
-import MarkerIcon5 from './Styles/Images/5marker.png';
-import MarkerIcon6 from './Styles/Images/6marker.png';
-import MarkerIcon7 from './Styles/Images/7marker.png';
-import MarkerIcon8 from './Styles/Images/8marker.png';
-import MarkerIcon9 from './Styles/Images/9marker.png';
-import MarkerIconEnd from './Styles/Images/Endmarker.png';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAXNMr9rdcFsVqxuYvu0eRr8YqmSZCUO24",
@@ -36,40 +23,18 @@ firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 
 export default function ScoreCard(props) {
-    const [pubScores, setPubScores] = useState(Pubs.map(() => 0));
-    const [penalties, setPenalties] = useState(Pubs.map(() => 0));
+    const [pubScores, setPubScores] = useState(Array(9).fill(0));
+    const [penalties, setPenalties] = useState(Array(9).fill(0));
     const [leader, setLeader] = useState("");
     const [leaderBoard, setLeaderBoard] = useState([]);
     const [leaderBoardOpen, setLeaderBoardOpen] = useState(false);
     const [total, setTotal] = useState(0);
-
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
     const [mapOpen, setMapOpen] = useState(false);
-
-    const positions = [38.9608, -119.9415];
-
-    const locations = [
-        { position: [38.9591, -119.94272], name: '1: MCPS Taphouse & Grill', icon: MarkerIcon1 },
-        { position: [38.9596, -119.9422], name: '2: Sports Bar', icon: MarkerIcon2 },
-        { position: [38.9601, -119.943], name: '3: Harvey’s Lake Tahoe casino', icon: MarkerIcon3 },
-        { position: [38.9594, -119.94145], name: '4: Hurrah Lake Tahoe', icon: MarkerIcon4 },
-        { position: [38.9597, -119.9415], name: '5: Tahoe Club Crawl', icon: MarkerIcon5 },
-        { position: [38.9609, -119.9408], name: '6: Peek Night Club', icon: MarkerIcon6 },
-        { position: [38.961, -119.9407], name: '7: Lake Tahoe AlewarX', icon: MarkerIcon7 },
-        { position: [38.96115, -119.94055], name: '8: Lucky Beaver Bar', icon: MarkerIcon8 },
-        { position: [38.96167, -119.9401], name: '9: Dottys Casino', icon: MarkerIcon9 },
-        { position: [38.9621, -119.9413], name: 'End: Hard Rock Casino', icon: MarkerIconEnd },
-    ];
-    const locs = [
-        [38.9591, -119.94272],
-        [38.9596, -119.9422],
-        [38.9601, -119.943],
-        [38.9594, -119.94145],
-        [38.9597, -119.9415],
-        [38.9609, -119.9408],
-        [38.961, -119.9407],
-        [38.96115, -119.94055],
-        [38.96167, -119.9401],
-        [38.9621, -119.9413]];
+    const [allPubs, setAllPubs] = useState(Array(9).fill(''));
+    const [hole, setHole] = useState('');
+    const [addies, setAddies] = useState("");
 
     useEffect(() => {
         const fetchScores = async () => {
@@ -187,6 +152,8 @@ export default function ScoreCard(props) {
     };
     const handleMap = () => {
         setMapOpen(!mapOpen);
+        console.log(addies)
+        window.open(`https://www.google.com/maps/search/?api=1&query=${addies}`)
     };
     useEffect(() => {
         updateLeaderBoard();
@@ -199,28 +166,58 @@ export default function ScoreCard(props) {
         });
         updateLeaderBoard();
     };
+        useEffect(() => {
+            const unsubscribe = firestore.collection('Pubs').onSnapshot(snapshot => {
+                const pubs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setAllPubs(pubs);
+                const addy = snapshot.docs.map(doc => encodeURIComponent(doc.data().Address)).join("+");
+                setAddies(addy);
+            });
+            return unsubscribe;
+        }, []);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const pubRef = firestore.collection("Pubs").doc(hole);
+        const docs = pubRef.get();
+        try {
+            if (docs.exists) {
+                const data = docs.data();
+                console.log(data);
+            } else {
+                pubRef.set({
+                    Name: name,
+                    Address: address,
+                    Url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`,
+                });
+                }
+        setName("");
+        setAddress("");
+        setHole("");
+        } catch (error) {
+            console.error("Error adding pub: ", error);
+        }
+    };
 
     return (
         <div className="body">
             <h2 className="tittleHeader">2023 Heavenly<br/>Pub Golf</h2>
+            {props.name.toLowerCase() === 'jordan' && <form onSubmit={handleSubmit}>
+                <label>
+                    Pub Name:
+                    <input type="text" value={name} onChange={(event) => setName(event.target.value)}/>
+                </label>
+                <label>
+                    Hole:
+                    <input type="text" value={hole} onChange={(event) => setHole(event.target.value)}/>
+                </label>
+                <label>
+                    Address:
+                    <input type="text" value={address} onChange={(event) => setAddress(event.target.value)}/>
+                </label>
+                <button type="submit">Add Pub</button>
+            </form>}
             <div className="nav-links"><img src={MapIcon} alt="Look at map" className="maps" onClick={() => handleMap()}/></div>
-            {mapOpen &&
-                <div className="leaderBoardContainer">
-                    <div>
-                        <h1 className="exitBTN mapExit" onClick={() => handleMap()}>&times;</h1>
-                        <h3 className="mapTTL">Course Map</h3>
-                    </div>
-                    <MapContainer center={positions} zoom={16.5} scrollWheelZoom={false} style={{  height: "75vh", width: "80vw"}}>
-                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                        <Polyline pathOptions={{ color: 'blue', dashArray: '10, 10' }} positions={locs} />
-                        {locations.map((location, index) => (
-                            <Marker key={index} position={location.position} icon={L.icon({iconUrl: location.icon, iconSize: [25, 40]})}>
-                                <Popup>{location.name}</Popup>
-                            </Marker>
-                        ))}
-                    </MapContainer>
-                </div>
-            }
             <div>
                 <img src={Podium} alt="Leader Board" className="podium" onClick={() => handleLeaderBoard()}/>
                 {leaderBoardOpen && (
@@ -261,9 +258,9 @@ export default function ScoreCard(props) {
                 <div className="cell">Score</div>
                 <div className="cell">Penal</div>
             </div>
-            {Pubs.map((pub, index) => (
+            {Object.keys(allPubs).map((pub, index) => (
                 <div className="row" key={index}>
-                    <div className="cell1 pubs">{pub}</div>
+                    <div className="cell1 pubs" onClick={() => window.open(allPubs[pub].Url)}>{allPubs[pub].Name}</div>
                     <div className="cell pubs">{Drinks[index]}</div>
                     <div className="cell pubScore">{Pars[index]}</div>
                     <div className="cell"><input
