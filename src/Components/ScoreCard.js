@@ -153,7 +153,7 @@ export default function ScoreCard(props) {
     const handleMap = () => {
         setMapOpen(!mapOpen);
         console.log(addies)
-        window.open(`https://www.google.com/maps/search/?api=1&query=${addies}`)
+        window.open(`https://www.google.com/maps/dir/${addies}`)
     };
     useEffect(() => {
         updateLeaderBoard();
@@ -170,7 +170,7 @@ export default function ScoreCard(props) {
             const unsubscribe = firestore.collection('Pubs').onSnapshot(snapshot => {
                 const pubs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setAllPubs(pubs);
-                const addy = snapshot.docs.map(doc => encodeURIComponent(doc.data().Address)).join("+");
+                const addy = snapshot.docs.map(doc => encodeURIComponent(doc.data().Address)).join("/");
                 setAddies(addy);
             });
             return unsubscribe;
